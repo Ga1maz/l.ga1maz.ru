@@ -3,7 +3,7 @@ const urlsToCache = [
   "/index.html",
   "/BSansDisplay-SemiBold.woff2",
   "/SBSansText-Medium.woff2",
-  "/background.webm",
+  "/background.mp4",
   "/SBSansText-Regular.woff2",
   "/SBSansText-SemiBold.woff2",
   "/qr-code.jpg",
