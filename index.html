@@ -7,9 +7,10 @@
     <title>Almaz Ganiev</title>
 </head>
 <body>
-<video class="layoutVideo_zMqda video_vm1gB" autoplay loop playsinline muted src="background.mp4">
-    <source src="background.mp4" type="video/mp4">
+<video id="backgroundVideo" autoplay loop playsinline muted>
+    Ваш браузер не поддерживает видео.
 </video>
+
 
 <div class="agentBusinessCardPage_L1VNE">
     <div class="layoutAvatar_to2GL avatar_Al2U6 hasError_hwVX6">
@@ -45,7 +46,7 @@ if ('serviceWorker' in navigator) {
     .then(() => console.log('Service Worker зарегистрирован!'));
 }
 </script>
-
+<script src="app.js"></script>
 <style>
     html, body {
     overflow: hidden;
