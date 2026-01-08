@@ -38,6 +38,13 @@
 </div>
 </body>
 </html>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log('Service Worker зарегистрирован!'));
+}
+</script>
+
 <style>
     html, body {
     overflow: hidden;
