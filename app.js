@@ -1,5 +1,5 @@
 function openDB(callback) {
-  const request = indexedDB.open("offlineVideos", 1);
+  const request = indexedDB.open("offlineVideos", 2);
 
   request.onupgradeneeded = (e) => {
     const db = e.target.result;
