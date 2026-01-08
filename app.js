@@ -1,7 +1,7 @@
-function initDB(callback) {
-  const dbReq = indexedDB.open("offlineVideos", 1);
+function openDB(callback) {
+  const request = indexedDB.open("offlineVideos", 1);
 
-  dbReq.onupgradeneeded = (e) => {
+  request.onupgradeneeded = (e) => {
     const db = e.target.result;
     if (!db.objectStoreNames.contains("videos")) {
       db.createObjectStore("videos");
@@ -9,36 +9,39 @@ function initDB(callback) {
     }
   };
 
-  dbReq.onsuccess = (e) => {
+  request.onsuccess = (e) => {
     const db = e.target.result;
+    if (!db.objectStoreNames.contains("videos")) {
+      console.error("Object store 'videos' not found!");
+      db.close();
+      return;
+    }
     callback(db);
   };
 
-  dbReq.onerror = (e) => {
-    console.error("DB error:", e.target.error);
+  request.onerror = (e) => {
+    console.error("IndexedDB error:", e.target.error);
   };
 }
 
 function saveVideo() {
-  initDB(db => {
+  openDB(db => {
     fetch("background.mp4")
       .then(res => res.blob())
       .then(blob => {
         const tx = db.transaction("videos", "readwrite");
         tx.objectStore("videos").put(blob, "background");
-        tx.oncomplete = () => {
-          db.close();
-          console.log("Video saved to IndexedDB");
-        };
+        tx.oncomplete = () => db.close();
+        console.log("Video saved in IndexedDB");
       });
   });
 }
 
 function loadVideo() {
-  initDB(db => {
+  openDB(db => {
     const tx = db.transaction("videos", "readonly");
     const store = tx.objectStore("videos");
-    store.get("background").onsuccess = (ev) => {
+    store.get("background").onsuccess = ev => {
       const blob = ev.target.result;
       if (blob) {
         document.querySelector("video").src = URL.createObjectURL(blob);
